@@ -13,7 +13,7 @@ mysql = MySQL(app)
 app.secret_key ='mysecretkey'
 
 mysql = MySQL()
-
+#Ruta del Index
 @app.route('/')
 def Index():
     cur = mysql.connection.cursor()
@@ -21,6 +21,7 @@ def Index():
     data = cur.fetchall()
    
     return render_template('index.html', contacts = data)
+#Ruta para agregar
 @app.route('/add_contact', methods=['POST'])
 def add_contact():
     if request.method =='POST':
@@ -34,13 +35,34 @@ def add_contact():
         return redirect(url_for('Index'))
 
     return 'agregar contacto'
+
+#Ruta para editar
 @app.route('/edit/<id>')
 def get_contact(id):
     cur =mysql.connection.cursor()
     cur.execute('SELECT * FROM contacts WHERE id = %s', (id))
     data = cur.fetchall()
-    return render_template('edit-contact', contact = data[0])
+    return render_template('edit-contact.html', contact = data[0])
+#Ruta para Editar
+@app.route('/update/<id>', methods=['POST'])
+def update_contact(id):
+    if request.method =='POST':
+        fullname = request.form['fullname']
+        phone = request.form['phone']
+        email = request.form['email']
+    cur = mysql.connection.cursor()
+    cur.execute("""
+        UPDATE contacts 
+        SET fullname = %s,
+            email = %s,
+            phone = %s
+        WHERE id = %s
+     """, (fullname, email, phone, id))
+    mysql.connection.commit() 
+    flash('Contacto actualizado satisfactoriamente')
+    return redirect(url_for('Index'))
 
+#Ruta para elminar
 @app.route('/delete/<string:id>')
 def delete_contact(id):
     cur = mysql.connection.cursor()
