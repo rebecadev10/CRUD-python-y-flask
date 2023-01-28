@@ -1,25 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-   
-    <form action="/update/{{contact.0}}" method="post">
-        <input type="text" name="fullname" placeholder="Nombre Completo" value="{{contact.1}}">
-        <input type="text" name="phone" placeholder="Telefono" value="{{contact.2}}">
-        <input type="text" name="email" placeholder="Correo" value="{{contact.3}}">
+{% extends 'layout.html' %}
 
-        <button type="submit">
-            Guardar
-        </button>
+{% block body %}
+<div class="row">
+    <div class="col-md-5 pt-4">
+        <div class="card border-primary mb-3 card-body pb-4">
+            <form action="/update/{{contact.0}}" method="post">
+                <div class="form-group">
+                    <label for="exampleInputEmail1" class="form-label mt-4"
+                      >Nombre Completo</label
+                    >
+                    <input
+                      class="form-control"
+                      id="exampleInputEmail1"
+                      aria-describedby="emailHelp"
+                      type="text"
+                      name="fullname"
+                      value="{{contact.1}}"
+                      placeholder="Nombre Completo"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1" class="form-label mt-4">Telefono</label>
+                    <input
+                      class="form-control"
+                      id="exampleInputEmail1"
+                      aria-describedby="emailHelp"
+                      type="text"
+                      name="phone"
+                      value="{{contact.2}}"
+                      placeholder="Telefono"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1" class="form-label mt-4">Correo</label>
+                    <input
+                      class="form-control"
+                      id="exampleInputEmail1"
+                      aria-describedby="emailHelp"
+                      type="text"
+                      name="email"
+                      value="{{contact.3}}"
+                      placeholder="Correo"
+                    />
+                    <center>
+                        <button
+                          type="submit"
+                          class="btn btn-info btn-lg badge rounded-pill bg-primary "
+                          
+                        >
+                          Guardar
+                        </button>
+                      
+                         </center>
         
-
-    </form>
-
-
-</body>
-</html>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

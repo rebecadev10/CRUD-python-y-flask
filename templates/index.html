@@ -1,56 +1,99 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-{% for message in messages %}
-<p>{{ message }}</p>
+{% extends 'layout.html' %} 
+{% block body %}
 
-{% endfor %}
-{% endif %}
-{% endwith %}
-
-
-    <form action="/add_contact" method="post">
-        <input type="text" name="fullname" placeholder="Nombre Completo">
-        <input type="text" name="phone" placeholder="Telefono">
-        <input type="text" name="email" placeholder="Correo">
-
-        <button type="submit">
-            Guardar
-        </button>
+<div class="row">
+  <div class="col-md-5 pt-4">
+    {% with messages = get_flashed_messages() %} {% if messages %} {% for message in
+        messages %}
         
-
-    </form>
-
-    <table>
-        <thead>
-            <tr>
+        <div class="alert alert-dismissible alert-warning" role="alert">
+          {{ message }}
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+        {% endfor %} {% endif %} {% endwith %} 
+    <div class="card  border-primary mb-3 card-body">
+        <form action="/add_contact" method="post">
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="form-label mt-4"
+                >Nombre Completo</label
+              >
+              <input
+                class="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+                type="text"
+                name="fullname"
+                placeholder="Nombre Completo"
+              />
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="form-label mt-4">Telefono</label>
+              <input
+                class="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+                type="text"
+                name="phone"
+                placeholder="Telefono"
+              />
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1" class="form-label mt-4">Correo</label>
+              <input
+                class="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+                type="text"
+                name="email"
+                placeholder="Correo"
+              />
+            </div>
+      
+            <center>
+              <button
+                type="submit"
+                class="badge rounded-pill bg-primary"
+                style="margin-top: 20px; margin-bottom: 10px"
+              >
+                Guardar
+              </button>
+            </center>
+          </form>
+    </div>
+  </div>
+  <div class="col-md-7 pt-4">
+    <div class="card bg-secondary mb-3 card-body">
+        <table class="table table-success table-striped">
+            <thead>
+              <tr class="table-info">
                 <td>Nombre Completo</td>
                 <td>Telefono</td>
                 <td>Correo</td>
                 <td>Opciones</td>
-            </tr>
-        </thead>
-        <tbody>
-            {% for contact in contacts %}
-            <tr>
+              </tr>
+            </thead>
+            <tbody>
+              {% for contact in contacts %}
+              <tr class="table-light">
                 <td>{{ contact.1 }}</td>
                 <td>{{ contact.2 }}</td>
                 <td>{{ contact.3 }}</td>
                 <td>
-                    <a href="/edit/{{contact.0}}">Editar</a>
-                    <a href="/delete/{{contact.0}}">Eliminar</a>
+                  <a href="/edit/{{contact.0}}" class="btn btn-warning badge rounded-pill bg-warning">Editar</a>
+                  <a href="/delete/{{contact.0}}" class="btn btn-danger btn-delete badge rounded-pill bg-danger">Eliminar</a>
                 </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
-</html>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
